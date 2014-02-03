@@ -99,6 +99,13 @@
         
         [self addSubview:self.tableView];
         
+        if (!self.tableView.tableHeaderView) {
+            CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultMapHeight);
+            UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
+            tableHeaderView.backgroundColor = [UIColor clearColor];
+            self.tableView.tableHeaderView = tableHeaderView;
+        }
+        
         if ([self.delegate respondsToSelector:@selector(locationPicker:tableViewDidLoad:)]) {
             [self.delegate locationPicker:self tableViewDidLoad:self.tableView];
         }
@@ -106,13 +113,6 @@
         if (self.tableViewDidLoadBlock) {
             self.tableViewDidLoadBlock(self);
         }
-    }
-    
-    if (!self.tableView.tableHeaderView) {
-        CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultMapHeight);
-        UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
-        tableHeaderView.backgroundColor = [UIColor clearColor];
-        self.tableView.tableHeaderView = tableHeaderView;
     }
     
     if (!self.mapView) {
